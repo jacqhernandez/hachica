@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+    		// $schedule->command('backup:clean --disable-notifications')->daily()->at('12:20');
+    		// $schedule->command('backup:run --only-db --disable-notifications')->daily()->at('16:10');
     }
 
     /**
