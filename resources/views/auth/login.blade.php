@@ -72,7 +72,7 @@
               {{ csrf_field() }}
               <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                 <div class="col-md-12">
-                  <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" style="text-align: center;" required autofocus>
+                  <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" style="text-align: center; color: #777; font-weight: 300;" required autofocus>
                   @if ($errors->has('username'))
                     <span class="help-block">
                       <strong>{{ $errors->first('username') }}</strong>
@@ -82,7 +82,7 @@
               </div>
               <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <div class="col-md-12">
-                  <input id="password" type="password" class="form-control" name="password" placeholder="Password" style="text-align: center;" required>
+                  <input id="password" type="password" class="form-control" name="password" placeholder="Password" style="text-align: center; color: #777; font-weight: 300;" required>
                   @if ($errors->has('password'))
                     <span class="help-block">
                       <strong>{{ $errors->first('password') }}</strong>

@@ -5,7 +5,7 @@
 <div class="panel-heading" id="panel-heading">
 	<div>
 		Sales <?php if (!empty($label)) { echo $label; }?>
-		<span class="pull-right">	<a href="{{ route('items.create') }}" class="btn btn-primary pull-right" style="font-size: 10px; font-weight: 600; margin-left: 20px;"><span class="glyphicon glyphicon-plus"></span></a></span>
+		<span class="pull-right">	<a href="{{ route('sales.create') }}" class="btn btn-primary pull-right" style="font-size: 10px; font-weight: 600; margin-left: 20px;"><span class="glyphicon glyphicon-plus"></span></a></span>
 	</div>
 	<div class="pull-right " id="sales-dates">
 		<form>

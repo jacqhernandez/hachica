@@ -53,6 +53,7 @@ pie/donut chart for items
 laravel jquery tutorials alex petro https://www.youtube.com/watch?v=mM3xmzpvrCE
 https://www.youtube.com/watch?v=ZkGNY07aZh0&t=1061s
 
+MAGANDA NEXT TIME MAY PICTURE UNG ITEMS! hehehe nako lagot sa storage
 ====
 
 
@@ -62,7 +63,7 @@ To make this work,
 
 1. I created a batch file scheduler.bat with the following contents:
 	cd C:\xampp\htdocs\hsms
-	php artisan backup:run --only-db
+	php artisan backup:run --only-db --disable-notifications
 2. Launch the task scheduler Windows Key + R then paste in Taskschd.msc and hit enter.
 3. Click Create Basic Task on the right in the Actions pane.
 4. Name the task "HSMS Backup" then click Next.
@@ -76,3 +77,11 @@ To make this work,
 13. Click OK. Done.
 
 install laravel spatie backup!
+
+
+
+if natransfer na
+go to folder, then composer dump-autoload then composer install or composer update. then change .env stuff, then php artisan key:generate if wala pa app_key sa .env, then php artisan migrate --seed
+
+
+then install the fonts - right click install sa mga fonts na nasa css>fonts folder
