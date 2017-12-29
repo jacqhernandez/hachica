@@ -1,0 +1,45 @@
+/home changed to / (mga redirect to /home from auth)
+
+
+to do
+- pag mali username/pass (minsan tama naman na lalabs ung credentials do not match our records)
+
+for forms:
+https://laravelcollective.com/docs/5.4/html
+
+last purchase price should be automatic for every purchase, there should also be quantity under items - to reflect inventory
+
+pede may customer name per sale hehe to upsell
+
+discount on sale_items??
+
+error message na ur selling it at low cost price
+
+deleting cascade relationships
+
+pano mga walang barcode - fix na not required???? pati price sa item list????
+
+mga buttons baka pedeng icons or button na may background??
+
+trending ng prices sa view item page
+
+category ng items
+
+items in inventory ganon!
+
+BACKUP DATABASE
+
+di ko na muna nilagyan ng edit/delete sale item HAHAHA may autocomplete pa kasi ung edit sale item ulit asjsjdnaksdnasds
+
+pag nagdelete ng item, hindi dapat nadedelete ung sale item. 
+nako pano pag nag-galaw siya ng edit/delete item, maaffect ung sale item huhuhuhuh
+
+
+cool pag cinlick ung pts sa graph mag-oopen ung details
+
+HOY PAG NAGLIPAT KA CHECK MO LAHAT NG FILES NA BINAGO MO PAKSHET (ung env on the timezone, ung carbon sa date start, lahat ng home ginawa ko atang index fak)
+
+pie/donut chart for items
+
+laravel jquery tutorials alex petro https://www.youtube.com/watch?v=mM3xmzpvrCE
+https://www.youtube.com/watch?v=ZkGNY07aZh0&t=1061s
