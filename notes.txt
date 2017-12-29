@@ -74,3 +74,5 @@ To make this work,
 10. Go to the Triggers tab, click Daily in the list and click Edit. 
 11. In the Start field, change time to 9:00:00 AM (this backs up db at 9 am). Change this if desired.
 13. Click OK. Done.
+
+install laravel spatie backup!
