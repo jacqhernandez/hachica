@@ -44,7 +44,7 @@ class HomeController extends Controller
     	//dd($total_items_sold_today);
 
     	$sellable_items = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->groupBy('items.id')->orderBy('total_quantity','desc')->paginate(10);
-    	$items_not_selling = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->leftJoin('sale_items','items.id','=','sale_items.item_id')->groupBy('items.id')->orderBy('total_quantity','asc')->paginate(10); //i still included those that have sales but they're at the end of the list since this is ordered by quantity
+    	$items_not_selling = DB::table('items')->select(DB::raw('items.id, name, items.created_at as item_created_date, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->leftJoin('sale_items','items.id','=','sale_items.item_id')->groupBy('items.id')->orderBy('total_quantity','asc')->orderBy('item_created_date', 'asc')->paginate(10); //i still included those that have sales but they're at the end of the list since this is ordered by quantity
 
     	$transactions_last_thirty_days = [];
     	$sales_last_thirty_days = [];
@@ -96,7 +96,7 @@ class HomeController extends Controller
     }
 
     public function salesToday(){
-    	$sales_today = Sale::where('created_at','>=',Carbon::today())->orderBy('created_at','desc')->paginate(10);
+    	$sales_today = Sale::where('created_at','>=',Carbon::today())->orderBy('created_at','desc')->paginate(20);
     	$total_sales_today = 0;
     	foreach ($sales_today as $sale) {
     		$total_sales_today = $total_sales_today + $sale->total_amount;
@@ -106,7 +106,7 @@ class HomeController extends Controller
     }
 
     public function salesMonth(){
-    	$sales_month = Sale::whereMonth('created_at','=',Carbon::now()->month)->whereYear('created_at','=',Carbon::now()->year)->orderBy('created_at','desc')->paginate(10);
+    	$sales_month = Sale::whereMonth('created_at','=',Carbon::now()->month)->whereYear('created_at','=',Carbon::now()->year)->orderBy('created_at','desc')->paginate(20);
     	$total_sales_month = 0;
     	foreach ($sales_month as $sale) {
     		$total_sales_month = $total_sales_month + $sale->total_amount;
@@ -117,7 +117,7 @@ class HomeController extends Controller
 
     public function itemsToday()
     {
-    	$sales_today = Sale::where('created_at','>=',Carbon::today())->orderBy('created_at','desc')->paginate(10);
+    	$sales_today = Sale::where('created_at','>=',Carbon::today())->orderBy('created_at','desc')->paginate(20);
     	$total_sales_today = 0;
     	foreach ($sales_today as $sale) {
     		$total_sales_today = $total_sales_today + $sale->total_amount;

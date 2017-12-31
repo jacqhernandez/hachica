@@ -34,6 +34,8 @@
 								<td class="tr-number">&#8369;{{ $sale_item->price }}</td>
 								<td class="tr-number">{{ $sale_item->quantity }}</td>
 								<td class="tr-number">&#8369;{{ $sale_item->total }}</td>
+
+
 								<!-- <td></td><td></td> -->
 								<!-- <td>
 									{!! Form::open(['route' => ['sale_items.edit', $sale_item->id], 'method' => 'get', 'id' => 'edit' ]) !!}
@@ -51,9 +53,10 @@
 			<table id="sale-receipt-items" class="sale-receipt">
 				@foreach ($sale->saleItems as $sale_item)
 					<tr>
-						<td>{{ $sale_item->item->name }} ({{ $sale_item->item->description }})</td>
-						<td>{{ $sale_item->quantity }} x &#8369;{{ $sale_item->price }}</td>
-						<td class="pull-right sale-receipt-item-total">&#8369;{{ $sale_item->total }}</td>
+						<!-- <td>{{ $sale_item->item->name }} ({{ $sale_item->item->description }})</td> -->
+						<td class="sale-receipt-item-label">{{ $sale_item->item->name }}</td>
+						<td class="sale-receipt-item-price-quantity">{{ $sale_item->quantity }} x &#8369;{{ $sale_item->price }}</td>
+						<td class="sale-receipt-item-total">&#8369;{{ $sale_item->total }}</td>
 					</tr>
 				@endforeach
 			</table><br>
@@ -178,5 +181,15 @@ form{
 	padding-bottom: 20px;
 	margin-bottom: 35px;
 	color:white;
+}
+.sale-receipt-item-label{
+	padding-right: 20px;
+}
+.sale-receipt-item-price-quantity{
+	width: 30%;
+}
+.sale-receipt-item-total{
+	vertical-align: middle;
+	text-align: right;
 }
 </style>

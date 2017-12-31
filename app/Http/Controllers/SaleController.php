@@ -34,22 +34,22 @@ class SaleController extends Controller
     		if (($from && $from->format('Y-m-d') == $_GET['from']) & ($to && $to->format('Y-m-d') == $_GET['to'])){
 		  		$date_from = Carbon::instance($from)->startOfDay();
 		  		$date_to = Carbon::instance($to)->endOfDay();
-		  		$sales = Sale::whereBetween('created_at',[$date_from, $date_to])->orderBy('created_at','desc')->paginate(10);
+		  		$sales = Sale::whereBetween('created_at',[$date_from, $date_to])->orderBy('created_at','desc')->paginate(20);
 		  		$total_items_sold = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->whereBetween('sale_items.created_at',[$date_from, $date_to])->groupBy('items.id')->get()->count();
 		  		$label = "from <span class='label-date'>".$date_from->toFormattedDateString()."</span> to <span class='label-date'>".$date_to->toFormattedDateString()."</span>";
 		  	} else {
 		  		if ($from && $from->format('Y-m-d') == $_GET['from']){
 		  			$date_from = Carbon::instance($from)->startOfDay();
-		  			$sales = Sale::whereDate('created_at','=',$date_from)->orderBy('created_at','desc')->paginate(10);
+		  			$sales = Sale::whereDate('created_at','=',$date_from)->orderBy('created_at','desc')->paginate(20);
 		  			$total_items_sold = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->whereDate('sale_items.created_at','=',$date_from)->groupBy('items.id')->get()->count();
 		  			$label = "for <span class='label-date'>".$date_from->toFormattedDateString()."</span>";
 		  		} elseif ($to && $to->format('Y-m-d') == $_GET['to']) {
 		  			$date_to = Carbon::instance($to)->startOfDay();
-		  			$sales = Sale::whereDate('created_at','=',$date_to)->orderBy('created_at','desc')->paginate(10);
+		  			$sales = Sale::whereDate('created_at','=',$date_to)->orderBy('created_at','desc')->paginate(20);
 		  			$total_items_sold = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->whereDate('sale_items.created_at','=',$date_to)->groupBy('items.id')->get()->count();
 		  			$label = "for <span class='label-date'>".$date_to->toFormattedDateString()."</span>";
 		  		} else {
-		  			$sales = Sale::orderBy('created_at','desc')->paginate(10);
+		  			$sales = Sale::orderBy('created_at','desc')->paginate(20);
 		  			$total_items_sold = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->groupBy('items.id')->get()->count();
 		  		}
 		  	}
@@ -58,17 +58,17 @@ class SaleController extends Controller
     		if (isset($_GET['from'])){
     			$from = DateTime::createFromFormat('Y-m-d',$_GET['from']);
     			$date_from = Carbon::instance($from)->startOfDay();
-	  			$sales = Sale::whereDate('created_at','=',$date_from)->orderBy('created_at','desc')->paginate(10);
+	  			$sales = Sale::whereDate('created_at','=',$date_from)->orderBy('created_at','desc')->paginate(20);
 	  			$total_items_sold = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->whereDate('sale_items.created_at','=',$date_from)->groupBy('items.id')->get()->count();
 	  			$label = "for ".$date_from->toFormattedDateString();
     		} elseif (isset($_GET['to'])) {
     			$to = DateTime::createFromFormat('Y-m-d',$_GET['to']);
     			$date_to = Carbon::instance($to)->startOfDay();
-	  			$sales = Sale::whereDate('created_at','=',$date_to)->orderBy('created_at','desc')->paginate(10);
+	  			$sales = Sale::whereDate('created_at','=',$date_to)->orderBy('created_at','desc')->paginate(20);
 	  			$total_items_sold = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->whereDate('sale_items.created_at','=',$date_to)->groupBy('items.id')->get()->count();
 	  			$label = "for ".$date_to->toFormattedDateString();
     		} else {
-    			$sales = Sale::orderBy('created_at','desc')->paginate(10);
+    			$sales = Sale::orderBy('created_at','desc')->paginate(20);
     			$total_items_sold = DB::table('items')->select(DB::raw('items.id, name, count(*) as total_transactions, sum(quantity) as total_quantity, sum(total) as total_sales'))->rightJoin('sale_items','items.id','=','sale_items.item_id')->groupBy('items.id')->get()->count();
     		}
     	}

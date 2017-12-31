@@ -16,11 +16,23 @@ to do
 for forms:
 https://laravelcollective.com/docs/5.4/html
 
+DAPAT AUTOMATIC MAY BARCODE FIELD SA ADD ITEM SA CREATE SALE
+
+fuzzy match for autocomplete omg!
+
+VALIDATE UNG MGA BARCODES LALO NA NG MGA SIZES HUHUH
+
 last purchase price should be automatic for every purchase, there should also be quantity under items - to reflect inventory
 
 pede may customer name per sale hehe to upsell
 
 discount on sale_items??
+
+sa sales/create add item dapat may barcode - pano nga ba ung ginawa ko before haha basta ung validate nested stuff
+
+MGA ITEMS NA HINAHANAP PERO DI NAMIN BINEBENTA
+
+inventory + trends ng prices!
 
 error message na ur selling it at low cost price
 

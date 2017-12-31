@@ -95,23 +95,25 @@
   		var tr =$("<tr id='sale-receipt-item-"+count+"'/>");
 			tr.append($("<td></td>", {
 				id: "sale-receipt-item-label-"+count,
+				class: "sale-receipt-item-label",
 				text: function(){
 					if($('#sale-item-name-'+count).is('input')){
 						if ($('#sale-item-name-'+count).val() !== ""){
-							if ($('#sale-item-description-'+count).val() !== ""){
-								$(this).text($('#sale-item-name-'+count).val() + " (" + $('#sale-item-description-'+count).val() + ")");
-							} else {
-								$(this).text($('#sale-item-name-'+count).val());
-							}
+							// if ($('#sale-item-description-'+count).val() !== ""){
+							// 	$(this).text($('#sale-item-name-'+count).val() + " (" + $('#sale-item-description-'+count).val() + ")");
+							// } else {
+							// 	$(this).text($('#sale-item-name-'+count).val());
+							// }
 						} else {
 							$(this).text("---");
 						}
 					} else {
-						$(this).text($('#sale-item-name-'+count).text() + " (" + $('#sale-item-description-'+count).text() + ")")
+						// $(this).text($('#sale-item-name-'+count).text() + " (" + $('#sale-item-description-'+count).text() + ")")
+						$(this).text($('#sale-item-name-'+count).text());
 					}
 				}
-			})).append($("<td>"+$('#sale-item-quantity-'+count).val() +" x &#8369;"+parseFloat($('#sale-item-price-'+count).val()).toFixed(2)+"</td>"
-			)).append($("<td class='pull-right sale-receipt-item-total'>&#8369;"+$('#sale-item-total-'+count).val()+"</td>"
+			})).append($("<td class='sale-receipt-item-price-quantity'>"+$('#sale-item-quantity-'+count).val() +" x &#8369;"+parseFloat($('#sale-item-price-'+count).val()).toFixed(2)+"</td>"
+			)).append($("<td class='sale-receipt-item-total'>&#8369;"+$('#sale-item-total-'+count).val()+"</td>"
 			));
 		  $('#sale-receipt-items').append(tr);
 	  }
@@ -214,8 +216,16 @@
 				}
 			}
 		}).autocomplete( "instance" )._renderItem = function( ul, item ) { //to show details in autocomplete results
+			var description = item.description;
+			var barcode = item.barcode;
+			if (!item.description){
+				description = "--";
+			}
+			if (!item.barcode){
+				barcode = "--"
+			}
       return $( "<li>"
-      ).append( "<div>" + item.name + " (" + item.description + ") - PHP" + parseFloat(item.retail_price).toFixed(2) +" <div class='autocomplete-subtext pull-right'> Barcode: " + item.barcode + "</div></div>"
+      ).append( "<div>" + item.name + " (" + description + ") - PHP" + parseFloat(item.retail_price).toFixed(2) +" <div class='autocomplete-subtext pull-right'> Barcode: " + barcode + "</div></div>"
       ).appendTo( ul );
     };
 
@@ -412,5 +422,15 @@ input[type=radio]{
 }
 .sale-cash{
 	font-size: 12px;
+}
+.sale-receipt-item-label{
+	padding-right: 20px;
+}
+.sale-receipt-item-price-quantity{
+	width: 30%;
+}
+.sale-receipt-item-total{
+	vertical-align: middle;
+	text-align: right;
 }
 </style>

@@ -23,9 +23,9 @@ class ItemController extends Controller
     {
     		if (isset($_GET["search"])){
     			$search = $_GET["search"];
-    			$items = Item::where('name','LIKE','%'.$search.'%')->orWhere('description','LIKE','%'.$search.'%')->orWhere('barcode','LIKE','%'.$search.'%')->paginate(10);
+    			$items = Item::where('name','LIKE','%'.$search.'%')->orWhere('description','LIKE','%'.$search.'%')->orWhere('barcode','LIKE','%'.$search.'%')->orderBy('name','asc')->paginate(20);
     		} else {
-    			$items = Item::paginate(10);
+    			$items = Item::orderBy('name','asc')->paginate(20);
     		}
         return view('items.index', compact('items'));
     }
@@ -69,14 +69,29 @@ class ItemController extends Controller
     public function show($id)
     {
       $item = Item::find($id);
-      $sale_items = $item->saleItems()->orderBy('created_at','desc')->paginate(10);
+      $sale_items = $item->saleItems()->orderBy('created_at','desc')->paginate(20);
+
+      $sale_items_for_price_trends = $item->saleItems()->get();
+      if (count($sale_items_for_price_trends) > 0){
+      	$sale_item_price_changes_prices = [$sale_items_for_price_trends[0]->price];
+      	$sale_item_price_changes_dates = [$sale_items_for_price_trends[0]->created_at->toFormattedDateString()];
+      	for($i = 1; $i < count($sale_items_for_price_trends); $i++ ){
+	      	if ($sale_items_for_price_trends[$i]){
+	      		if ($sale_items_for_price_trends[$i]->price !== $sale_item_price_changes_prices[$i-1]){
+	      			array_push($sale_item_price_changes_prices, $sale_items_for_price_trends[$i]->price);
+	      			array_push($sale_item_price_changes_dates, $sale_items_for_price_trends[$i]->created_at->toFormattedDateString());
+	      		}
+	      	}
+	      }
+      }
+
       $sale_items_total_amount = 0;
       $sale_items_total_quantity = 0;
       foreach ($sale_items as $sale_item){
       	$sale_items_total_quantity = $sale_items_total_quantity + $sale_item->quantity;
       	$sale_items_total_amount = $sale_items_total_amount + $sale_item->total;
       }
-      return view('items.show', compact(['item', 'sale_items', 'sale_items_total_amount', 'sale_items_total_quantity']));
+      return view('items.show', compact(['item', 'sale_items', 'sale_items_total_amount', 'sale_items_total_quantity','sale_item_price_changes_prices','sale_item_price_changes_dates']));
     }
 
     /**

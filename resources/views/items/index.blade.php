@@ -28,7 +28,7 @@
 				<th>Description</th>
 				<th class="tr-number">Current Retail Price</th>
 				<th class="tr-number">Current Wholesale Price</th>
-				<th class="tr-number">Last Purchase Price</th>
+				<!-- <th class="tr-number">Last Purchase Price</th> -->
 				<th class="sorttable_nosort"></th><th class="sorttable_nosort"></th>
 				<th class="sorttable_nosort"></th>
 				<!-- <th class="sorttable_nosort"></th> -->
@@ -43,7 +43,7 @@
 					<td>{{ $item->description }}</td>
 					<td class="tr-number">&#8369;{{ $item->retail_price }}</td>
 					<td class="tr-number">&#8369;{{ $item->wholesale_price }}</td>
-					<td class="tr-number">&#8369;{{ $item->last_purchase_price }}</td>
+					<!-- <td class="tr-number">&#8369;{{ $item->last_purchase_price }}</td> -->
 					<td></td><td></td>
 					<td>
 						<div id="show"><a href="{{ route('items.show', [$item->id]) }}" class="btn btn-info btn-main-info">View</a></div>
