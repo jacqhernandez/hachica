@@ -21,25 +21,35 @@
 	</div>
 	
 	<div class="row" style="margin-top: 20px;">
-		<div class="col-xs-6">
+		<div class="col-sm-6">
+  		<div class="panel panel-default">
+  			<div class="panel-heading">Price Trends</div>
+  			<div class="panel-body">
+  				<ul class="nav nav-tabs">
+  					<li class="active"><a data-toggle="tab" href="#tab-retail-price-trends" class="tab-label">Retail</a></li>
+    				<li><a data-toggle="tab" href="#tab-wholesale-price-trends" class="tab-label">Wholesale</a></li>
+  				 </ul>
+  				<div class="tab-content">
+  					<div id="tab-retail-price-trends" class="tab-pane fade in active">
+  						<canvas class="charts" id="retailpricetrends"></canvas>
+  				 	</div>
+  				 	<div id="tab-wholesale-price-trends" class="tab-pane fade">
+  				 		<canvas class="charts" id="wholesalepricetrends"></canvas>
+  				 	</div>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  	<div class="col-sm-6">
 			<div class="panel panel-default">
-					<div class="panel-heading">Sale Price Trends</div>
-					<div class="panel-body">
-						<canvas class="charts" id="salepricetrends"></canvas>
-					</div>
+				<div class="panel-heading">Purchase Price Trends</div>
+				<div class="panel-body">
+					COMING SOON ;)
+					<canvas class="charts" id="purchasepricetrends"></canvas>
+				</div>
 			</div>
 		</div>
-		<div class="col-xs-6">
-			<div class="panel panel-default">
-					<div class="panel-heading">Purchase Price Trends</div>
-					<div class="panel-body">
-						COMING SOON ;)
-						<canvas class="charts" id="purchasepricetrends"></canvas>
-					</div>
-			</div>
-		</div>
-	</div>
-
+  </div>
 </div>
 
 <div class="panel-body">
@@ -99,15 +109,13 @@ th{
 .charts{
 	padding-right: 20px;
 }
+.tab-label{
+	font-size: 13px;
+}
 </style>
 
 @section('script')
 <script type="text/javascript">
-	var last_thirty_days = [moment().format('MMM D')];
-	for (i = 1; i < 100; i++){
-		last_thirty_days.unshift(moment().subtract(i,'days').format('MMM D'));
-	}
-
 	//disables toggling of chart when legend/label is clicked
 	var options = {
   	legend: {
@@ -115,20 +123,38 @@ th{
     }
 	}
 	
-	var priceTrends = {
-	  labels : <?php echo json_encode($sale_item_price_changes_dates) ?>,
+	var retailPriceTrends = {
+	  labels : <?php echo json_encode($sale_item_retail_price_changes_dates) ?>,
 	  datasets : [
 		  {
-	      label: "Sale Prices for " + <?php echo json_encode($item->name) ?>,
+	      label: "Retail Prices for " + <?php echo json_encode($item->name) ?>,
 	      borderColor: "#5cb85c",
 	      backgroundColor: "rgba(92, 184, 92, 0.3)",
-	      data : <?php echo json_encode($sale_item_price_changes_prices) ?>
+	      data : <?php echo json_encode($sale_item_retail_price_changes_prices) ?>
 		  }
 	  ]
 	}
 
-	Chart.Line('salepricetrends',{
-		data: priceTrends,
+	Chart.Line('retailpricetrends',{
+		data: retailPriceTrends,
+		responsive: true,
+		options : options
+	});
+
+	var wholesalePriceTrends = {
+	  labels : <?php echo json_encode($sale_item_wholesale_price_changes_dates) ?>,
+	  datasets : [
+		  {
+	      label: "Wholesale Prices for " + <?php echo json_encode($item->name) ?>,
+	      borderColor: "#d9534f",
+	      backgroundColor: "rgba(217, 83, 79, 0.3)",
+	      data : <?php echo json_encode($sale_item_wholesale_price_changes_prices) ?>
+		  }
+	  ]
+	}
+
+	Chart.Line('wholesalepricetrends',{
+		data: wholesalePriceTrends,
 		responsive: true,
 		options : options
 	});

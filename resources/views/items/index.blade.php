@@ -31,23 +31,18 @@
 				<!-- <th class="tr-number">Last Purchase Price</th> -->
 				<th class="sorttable_nosort"></th><th class="sorttable_nosort"></th>
 				<th class="sorttable_nosort"></th>
-				<!-- <th class="sorttable_nosort"></th> -->
-				<th class="sorttable_nosort"></th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach ($items as $item)
 				<tr>
 					<td>{{ $item->barcode }}</td>
-					<td>{{ $item->name}} </td>
+					<td><a href="{{ route('items.show', [$item->id] )}}" class="show-item">{{ $item->name }}</a></td>
 					<td>{{ $item->description }}</td>
 					<td class="tr-number">&#8369;{{ $item->retail_price }}</td>
 					<td class="tr-number">&#8369;{{ $item->wholesale_price }}</td>
 					<!-- <td class="tr-number">&#8369;{{ $item->last_purchase_price }}</td> -->
 					<td></td><td></td>
-					<td>
-						<div id="show"><a href="{{ route('items.show', [$item->id]) }}" class="btn btn-info btn-main-info">View</a></div>
-					</td>
  					<!-- <td>
 						{!! Form::open(['route' => ['items.destroy', $item->id], 'method' => 'delete', 'id'=>'delete' ]) !!}
 							<?php echo"
@@ -127,5 +122,8 @@ form{
 	border-right: transparent;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
+}
+.show-item:hover{
+	text-decoration: none;
 }
 </style>

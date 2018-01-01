@@ -71,15 +71,35 @@ class ItemController extends Controller
       $item = Item::find($id);
       $sale_items = $item->saleItems()->orderBy('created_at','desc')->paginate(20);
 
-      $sale_items_for_price_trends = $item->saleItems()->get();
-      if (count($sale_items_for_price_trends) > 0){
-      	$sale_item_price_changes_prices = [$sale_items_for_price_trends[0]->price];
-      	$sale_item_price_changes_dates = [$sale_items_for_price_trends[0]->created_at->toFormattedDateString()];
-      	for($i = 1; $i < count($sale_items_for_price_trends); $i++ ){
-	      	if ($sale_items_for_price_trends[$i]){
-	      		if ($sale_items_for_price_trends[$i]->price !== $sale_item_price_changes_prices[$i-1]){
-	      			array_push($sale_item_price_changes_prices, $sale_items_for_price_trends[$i]->price);
-	      			array_push($sale_item_price_changes_dates, $sale_items_for_price_trends[$i]->created_at->toFormattedDateString());
+      $sale_item_retail_price_changes_prices = [];
+      $sale_item_retail_price_changes_dates = [];
+      
+      $sale_items_for_retail_price_trends = $item->saleItems()->where('type','retail')->get();
+      if (count($sale_items_for_retail_price_trends) > 0){
+      	$sale_item_retail_price_changes_prices = [$sale_items_for_retail_price_trends[0]->price];
+      	$sale_item_retail_price_changes_dates = [$sale_items_for_retail_price_trends[0]->created_at->toFormattedDateString()];
+      	for($i = 1; $i < count($sale_items_for_retail_price_trends); $i++ ){
+	      	if ($sale_items_for_retail_price_trends[$i]){
+	      		if ($sale_items_for_retail_price_trends[$i]->price !== $sale_item_retail_price_changes_prices[$i-1]){
+	      			array_push($sale_item_retail_price_changes_prices, $sale_items_for_retail_price_trends[$i]->price);
+	      			array_push($sale_item_retail_price_changes_dates, $sale_items_for_retail_price_trends[$i]->created_at->toFormattedDateString());
+	      		}
+	      	}
+	      }
+      }
+
+      $sale_item_wholesale_price_changes_prices = [];
+      $sale_item_wholesale_price_changes_dates = [];
+      
+      $sale_items_for_wholesale_price_trends = $item->saleItems()->where('type','wholesale')->get();
+      if (count($sale_items_for_wholesale_price_trends) > 0){
+      	$sale_item_wholesale_price_changes_prices = [$sale_items_for_wholesale_price_trends[0]->price];
+      	$sale_item_wholesale_price_changes_dates = [$sale_items_for_wholesale_price_trends[0]->created_at->toFormattedDateString()];
+      	for($i = 1; $i < count($sale_items_for_wholesale_price_trends); $i++ ){
+	      	if ($sale_items_for_wholesale_price_trends[$i]){
+	      		if ($sale_items_for_wholesale_price_trends[$i]->price !== $sale_item_wholesale_price_changes_prices[$i-1]){
+	      			array_push($sale_item_wholesale_price_changes_prices, $sale_items_for_wholesale_price_trends[$i]->price);
+	      			array_push($sale_item_wholesale_price_changes_dates, $sale_items_for_wholesale_price_trends[$i]->created_at->toFormattedDateString());
 	      		}
 	      	}
 	      }
@@ -91,7 +111,7 @@ class ItemController extends Controller
       	$sale_items_total_quantity = $sale_items_total_quantity + $sale_item->quantity;
       	$sale_items_total_amount = $sale_items_total_amount + $sale_item->total;
       }
-      return view('items.show', compact(['item', 'sale_items', 'sale_items_total_amount', 'sale_items_total_quantity','sale_item_price_changes_prices','sale_item_price_changes_dates']));
+      return view('items.show', compact(['item', 'sale_items', 'sale_items_total_amount', 'sale_items_total_quantity','sale_item_retail_price_changes_prices','sale_item_retail_price_changes_dates','sale_item_wholesale_price_changes_prices','sale_item_wholesale_price_changes_dates']));
     }
 
     /**
