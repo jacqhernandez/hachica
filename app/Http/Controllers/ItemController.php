@@ -112,12 +112,12 @@ class ItemController extends Controller
       $purchase_items_for_price_trends = $item->purchaseItems()->get();
       if (count($purchase_items_for_price_trends) > 0){
       	$purchase_item_price_changes_prices = [$purchase_items_for_price_trends[0]->price];
-      	$purchase_item_price_changes_dates = [$purchase_items_for_price_trends[0]->purchase->purchase_date];
+      	$purchase_item_price_changes_dates = [(\Carbon\Carbon::createFromFormat('Y-m-d',($purchase_items_for_price_trends[0]->purchase->purchase_date)))->toFormattedDateString()];
       	for($i = 1; $i < count($purchase_items_for_price_trends); $i++ ){
 	      	if ($purchase_items_for_price_trends[$i]){
 	      		if ($purchase_items_for_price_trends[$i]->price !== $purchase_item_price_changes_prices[$i-1]){
 	      			array_push($purchase_item_price_changes_prices, $purchase_items_for_price_trends[$i]->price);
-	      			array_push($purchase_item_price_changes_dates, $purchase_items_for_price_trends[$i]->purchase->purchase_date);
+	      			array_push($purchase_item_price_changes_dates, (\Carbon\Carbon::createFromFormat('Y-m-d',($purchase_items_for_price_trends[$i]->purchase->purchase_date)))->toFormattedDateString());
 	      		}
 	      	}
 	      }

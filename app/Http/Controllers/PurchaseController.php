@@ -105,7 +105,7 @@ class PurchaseController extends Controller
 				'supplier' => $request['purchase-supplier'],
 				'purchase_date' => DateTime::createFromFormat('Y-m-d',$request['purchase-date'])
 			]);
-
+			
 			$purchase_items = $request['purchase-items'];
 			foreach ($purchase_items as $purchase_item) {
 				$new_purchase_item = new PurchaseItem;
