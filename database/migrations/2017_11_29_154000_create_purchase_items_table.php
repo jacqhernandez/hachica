@@ -20,7 +20,7 @@ class CreatePurchaseItemsTable extends Migration
             $table->integer('purchase_id')->unsigned();
             $table->foreign('purchase_id')->references('id')->on('purchases');
             $table->integer('quantity')->unsigned();
-            $table->decimal('price',5,2);
+            $table->decimal('price',6,2);
             $table->decimal('total',6,2);
             $table->timestamps();
         });
