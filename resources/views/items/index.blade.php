@@ -28,7 +28,7 @@
 				<th>Description</th>
 				<th class="tr-number">Current Retail Price</th>
 				<th class="tr-number">Current Wholesale Price</th>
-				<!-- <th class="tr-number">Last Purchase Price</th> -->
+				<th class="tr-number">Last Purchase Price</th>
 				<th class="sorttable_nosort"></th><th class="sorttable_nosort"></th>
 				<th class="sorttable_nosort"></th>
 			</tr>
@@ -41,7 +41,14 @@
 					<td>{{ $item->description }}</td>
 					<td class="tr-number">&#8369;{{ $item->retail_price }}</td>
 					<td class="tr-number">&#8369;{{ $item->wholesale_price }}</td>
-					<!-- <td class="tr-number">&#8369;{{ $item->last_purchase_price }}</td> -->
+					<td class="tr-number">
+					<?php
+					$purchase_items = \DB::table('purchase_items')->rightJoin('items','items.id','=','purchase_items.item_id')->rightJoin('purchases','purchases.id','=','purchase_items.purchase_id')->where('items.id','=',$item->id)->orderBy('purchases.purchase_date','desc')->get();
+					?>
+					@if (count($purchase_items) > 0)
+						&#8369;{{ $purchase_items[0]->price }}
+					@endif
+					</td>
 					<td></td><td></td>
  					<!-- <td>
 						{!! Form::open(['route' => ['items.destroy', $item->id], 'method' => 'delete', 'id'=>'delete' ]) !!}

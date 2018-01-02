@@ -20,7 +20,6 @@ class CreateItemsTable extends Migration
             $table->string('description')->nullable();
             $table->decimal('retail_price',5,2);
             $table->decimal('wholesale_price',5,2);
-            $table->decimal('last_purchase_price',5,2)->default(1);
             $table->timestamps();
         });
     }

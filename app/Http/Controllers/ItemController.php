@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Http\Requests;
+use DB;
 
 class ItemController extends Controller
 {
@@ -105,13 +106,37 @@ class ItemController extends Controller
 	      }
       }
 
+      $purchase_item_price_changes_prices = [];
+      $purchase_item_price_changes_dates = [];
+      
+      $purchase_items_for_price_trends = $item->purchaseItems()->get();
+      if (count($purchase_items_for_price_trends) > 0){
+      	$purchase_item_price_changes_prices = [$purchase_items_for_price_trends[0]->price];
+      	$purchase_item_price_changes_dates = [(\Carbon\Carbon::createFromFormat('Y-m-d',($purchase_items_for_price_trends[0]->purchase->purchase_date)))->toFormattedDateString()];
+      	for($i = 1; $i < count($purchase_items_for_price_trends); $i++ ){
+	      	if ($purchase_items_for_price_trends[$i]){
+	      		if ($purchase_items_for_price_trends[$i]->price !== $purchase_item_price_changes_prices[$i-1]){
+	      			array_push($purchase_item_price_changes_prices, $purchase_items_for_price_trends[$i]->price);
+	      			array_push($purchase_item_price_changes_dates, (\Carbon\Carbon::createFromFormat('Y-m-d',($purchase_items_for_price_trends[$i]->purchase->purchase_date)))->toFormattedDateString());
+	      		}
+	      	}
+	      }
+      }
+
       $sale_items_total_amount = 0;
       $sale_items_total_quantity = 0;
       foreach ($sale_items as $sale_item){
       	$sale_items_total_quantity = $sale_items_total_quantity + $sale_item->quantity;
       	$sale_items_total_amount = $sale_items_total_amount + $sale_item->total;
       }
-      return view('items.show', compact(['item', 'sale_items', 'sale_items_total_amount', 'sale_items_total_quantity','sale_item_retail_price_changes_prices','sale_item_retail_price_changes_dates','sale_item_wholesale_price_changes_prices','sale_item_wholesale_price_changes_dates']));
+
+      
+			$purchase_items = \DB::table('purchase_items')->rightJoin('items','items.id','=','purchase_items.item_id')->rightJoin('purchases','purchases.id','=','purchase_items.purchase_id')->where('items.id','=',$item->id)->orderBy('purchases.purchase_date','desc')->get();
+			if (count($purchase_items) > 0){
+				$last_purchase_price =  $purchase_items[0]->price;
+			}
+
+      return view('items.show', compact(['item', 'sale_items', 'sale_items_total_amount', 'sale_items_total_quantity','sale_item_retail_price_changes_prices','sale_item_retail_price_changes_dates','sale_item_wholesale_price_changes_prices','sale_item_wholesale_price_changes_dates','last_purchase_price','purchase_item_price_changes_prices','purchase_item_price_changes_dates']));
     }
 
     /**
