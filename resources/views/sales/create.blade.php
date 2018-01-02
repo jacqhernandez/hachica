@@ -157,6 +157,12 @@
 			});
 	  }
 
+	  	$('#search').keypress(function(event){
+	  		if (event.which == '10' || event.which == '13'){
+	  			event.preventDefault();
+	  		}
+	  	});
+
 		$('#search').autocomplete({
 			source: "{{ route('sales.search') }}",
 			select: function(key, value){
