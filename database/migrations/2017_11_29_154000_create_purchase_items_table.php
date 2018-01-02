@@ -17,9 +17,11 @@ class CreatePurchaseItemsTable extends Migration
             $table->increments('id');
             $table->integer('item_id')->unsigned();
             $table->foreign('item_id')->references('id')->on('items');
-            $table->decimal('amount',8,2);
-            $table->string('supplier');
-            $table->date('purchase_date');
+            $table->integer('purchase_id')->unsigned();
+            $table->foreign('purchase_id')->references('id')->on('purchases');
+            $table->integer('quantity')->unsigned();
+            $table->decimal('price',5,2);
+            $table->decimal('total',6,2);
             $table->timestamps();
         });
     }

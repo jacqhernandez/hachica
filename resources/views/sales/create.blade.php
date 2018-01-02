@@ -157,6 +157,12 @@
 			});
 	  }
 
+	  $('#search').keypress(function(event){
+	  	if(event.which == '10' || event.which == '13'){
+	  		event.preventDefault();
+	  	}
+	  })
+
 		$('#search').autocomplete({
 			source: "{{ route('sales.search') }}",
 			select: function(key, value){
@@ -167,7 +173,8 @@
 			  )).append($("<td><div class='sale-item-delete' id='sale-item-delete-"+count+"'><i class='fa fa-remove fa-lg'></i></div></td>"
 				)).append($("<td />", {
 					text: value.item.name,
-					id: "sale-item-name-"+count
+					id: "sale-item-name-"+count,
+					class: "sale-item-name"
 				})).append($("<td />",{
 					text: value.item.description,
 					id: "sale-item-description-"+count
@@ -234,7 +241,7 @@
     	var tr =$("<tr id='sale-item-"+count+"'/>");
     	tr.append($("<input hidden readonly name='sale-items["+count+"][item-id]'>"
 		  )).append($("<td><div class='sale-item-delete sale-item-new-delete' id='sale-item-delete-"+count+"'><i class='fa fa-remove fa-lg'></i></div></td>"
-			)).append($("<td><input class='form-control sale-item-input sale-item-new-input' name='sale-items["+count+"][name]' id='sale-item-name-"+count+"' placeholder='Name' required></td>"
+			)).append($("<td><input class='form-control sale-item-input sale-item-new-input' name='sale-items["+count+"][name]' class='sale-item-name' id='sale-item-name-"+count+"' placeholder='Name' required></td>"
 			)).append($("<td><input class='form-control sale-item-input sale-item-new-input' name='sale-items["+count+"][description]' id='sale-item-description-"+count+"' placeholder='Description'></td>"
 			)).append($("<td class='td-radio'> <input class='sale-item-type' checked='checked' name='sale-items["+count+"][type]' type='radio' value='1'> Retail<br><input class='sale-item-type' name='sale-items["+count+"][type]' type='radio' value='2'> Wholesale </td>"
 			)).append($("<td><input class='form-control sale-item-input ' id='sale-item-price-"+count+"' type='number' min='1' max='999.99' step='0.01' name='sale-items["+count+"][price]' value='1' required></td>"
@@ -298,7 +305,7 @@
 }
 .table{
 	font-weight: 100;
-	font-size: 14px;
+	font-size: 13px;
 }
 th{
 	font-family: 'Raleway', sans-serif;
@@ -432,5 +439,8 @@ input[type=radio]{
 .sale-receipt-item-total{
 	vertical-align: middle;
 	text-align: right;
+}
+.sale-item-name{
+	width: 20%;
 }
 </style>

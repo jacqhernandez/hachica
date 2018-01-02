@@ -74,6 +74,7 @@
                   	<li><a href="{{ route('index') }}">Dashboard</a></li>
                     <li><a href="{{ route('items.index') }}">Items</a></li>
                     <li><a href="{{ route('sales.index') }}">Sales</a></li>
+                    <li><a href="{{ route('purchases.index') }}">Purchases</a></li>
                     <li><a href="{{ route('sales.create') }}">Create Sale</a></li>
                     <li role="presentation" class="divider"></li>
                     <li>

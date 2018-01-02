@@ -12,4 +12,9 @@ class Item extends Model
   {
   	return $this->hasMany('App\SaleItem');
   }
+
+  public function purchaseItems()
+  {
+  	return $this->hasMany('App\PurchaseItem');
+  }
 }

@@ -16,14 +16,19 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 item-prices">
 			Current Retail Price: &#8369;{{ $item->retail_price}}<br>
 			Current Wholesale Price: &#8369;{{ $item->wholesale_price}}<br>
-			Last Purchase Price: --<!-- &#8369;{{ $item->last_purchase_price}} -->
+			Last Purchase Price: 
+			@if (!empty($last_purchase_price))
+			&#8369;{{$last_purchase_price}}
+			@else
+			--
+			@endif
 		</div>
 	</div>
 	
 	<div class="row" style="margin-top: 20px;">
 		<div class="col-sm-6">
   		<div class="panel panel-default">
-  			<div class="panel-heading">Price Trends</div>
+  			<div class="panel-heading">Sale Price Trends</div>
   			<div class="panel-body">
   				<ul class="nav nav-tabs">
   					<li class="active"><a data-toggle="tab" href="#tab-retail-price-trends" class="tab-label">Retail</a></li>
@@ -44,7 +49,6 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Purchase Price Trends</div>
 				<div class="panel-body">
-					COMING SOON ;)
 					<canvas class="charts" id="purchasepricetrends"></canvas>
 				</div>
 			</div>
@@ -146,8 +150,8 @@ th{
 	  datasets : [
 		  {
 	      label: "Wholesale Prices for " + <?php echo json_encode($item->name) ?>,
-	      borderColor: "#d9534f",
-	      backgroundColor: "rgba(217, 83, 79, 0.3)",
+	      borderColor: "#f0ad4e",
+	      backgroundColor: "rgba(240, 173, 78, 0.3)",
 	      data : <?php echo json_encode($sale_item_wholesale_price_changes_prices) ?>
 		  }
 	  ]
@@ -155,6 +159,24 @@ th{
 
 	Chart.Line('wholesalepricetrends',{
 		data: wholesalePriceTrends,
+		responsive: true,
+		options : options
+	});
+
+	var purchasePriceTrends = {
+	  labels : <?php echo json_encode($purchase_item_price_changes_dates) ?>,
+	  datasets : [
+		  {
+	      label: "Purchase Prices for " + <?php echo json_encode($item->name) ?>,
+	      borderColor: "#d9534f",
+	      backgroundColor: "rgba(217, 83, 79, 0.3)",
+	      data : <?php echo json_encode($purchase_item_price_changes_prices) ?>
+		  }
+	  ]
+	}
+
+	Chart.Line('purchasepricetrends',{
+		data: purchasePriceTrends,
 		responsive: true,
 		options : options
 	});

@@ -16,6 +16,10 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('total_amount', 8,2);
+            $table->decimal('payment', 8,2);
+            $table->decimal('change', 6,2);
+            $table->string('supplier');
+            $table->date('purchase_date');
             $table->timestamps();
         });
     }

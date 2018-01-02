@@ -24,4 +24,5 @@ Route::resource('items', 'ItemController');
 Route::resource('sales', 'SaleController');
 Route::get('sales-search','SaleController@search')->name('sales.search');
 
-Route::resource('sale_items', 'SaleItemController');
+Route::resource('purchases', 'PurchaseController');
+Route::get('purchases-search','PurchaseController@search')->name('purchases.search');
